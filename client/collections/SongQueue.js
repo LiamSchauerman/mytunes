@@ -14,6 +14,7 @@ var SongQueue = Songs.extend({
     this.on('ended', function(song) {
       console.log('I heard you');
       this.dequeue(song);
+      this.playFirst();
     }, this);
       //remove from SQ and call playNextcheck if there is anything to play
 
@@ -21,11 +22,15 @@ var SongQueue = Songs.extend({
 
   playFirst: function(){
     console.log('playFirst: I was called');
-    this.models[0].play();
+    //check if it's not empty
+    if(this.models.length > 0 ){
+      this.models[0].play();
+    }
   },
 
   // check:
   checkNext: function() {
+
     if (this.models.length > 0){
        this.playFirst();
     }
@@ -33,13 +38,15 @@ var SongQueue = Songs.extend({
 
   enqueue: function(song){
     this.add(song);
-    console.log(this.models.length);
-    this.checkNext();
+    //check if it's the only song -> play
+    if(this.models.length === 1) {
+      this.playFirst();
+    }
   },
 
   dequeue: function(song){
     this.remove(song);
-    this.checkNext();
+
   }
 
 
