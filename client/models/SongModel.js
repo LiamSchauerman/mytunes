@@ -24,11 +24,12 @@ var SongModel = Backbone.Model.extend({
   ended: function(){
     // Triggering an event here will also trigger the event on the collection
     this.trigger('ended', this);
-    this.set('count', this.get('count') +1);
 
-    //saving playCount in localStorage
+    //new method - increase the count
+    this.set('count', parseInt(this.get('count')) + 1);
+
+    //new method - saving playCount in localStorage
     localStorage.setItem('playCount'+this.get('title'), this.get('count'));
-    console.log('count after ended:', this.get('count'));
   }
 
 });

@@ -16,13 +16,11 @@ var SongQueue = Songs.extend({
       this.dequeue(song);
       this.playFirst();
     }, this);
-      //remove from SQ and call playNextcheck if there is anything to play
 
   },
 
   playFirst: function(){
-    console.log('playFirst: I was called');
-    //check if it's not empty
+    // play the first song, if there are any to play
     if(this.models.length > 0 ){
       this.models[0].play();
     }
@@ -42,11 +40,16 @@ var SongQueue = Songs.extend({
     if(this.models.length === 1) {
       this.playFirst();
     }
+
+    //put it in storage
+    localStorage.setItem('queue', this.toJSON());
   },
 
   dequeue: function(song){
     this.remove(song);
 
+    localStorage.setItem('queue', this.toJSON());
+    console.log('toJSON', this.toJSON());
   }
 
 
